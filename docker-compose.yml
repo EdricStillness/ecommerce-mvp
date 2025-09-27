@@ -1,0 +1,14 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: ecommerce-mvp-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecommerce
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.data/mysql:/var/lib/mysql
