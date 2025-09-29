@@ -62,7 +62,12 @@ export async function PATCH(req: Request) {
 export async function DELETE(req: Request) {
   const items = await readCart();
   const { searchParams } = new URL(req.url);
-  const id = Number(searchParams.get("productId"));
+  const idParam = searchParams.get("productId");
+  if (!idParam) {
+    // clear all
+    return writeCart([], { ok: true, cleared: true });
+  }
+  const id = Number(idParam);
   const next = items.filter((i) => i.productId !== id);
   return writeCart(next);
 }
