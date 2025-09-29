@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { verifyJwt } from "@/lib/auth";
 import { z } from "zod";
 
 const Body = z.object({ items: z.array(z.object({ productId: z.number().int().positive(), qty: z.number().int().positive() })) });
@@ -9,6 +11,19 @@ export async function POST(req: Request) {
   const parse = Body.safeParse(json);
   if (!parse.success) return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
   const { items } = parse.data;
+
+  // Auth: extract user from session cookie (JWT)
+  const cookieStore = await cookies();
+  const token = cookieStore.get("session")?.value;
+  if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  let userId: number | null = null;
+  try {
+    const payload = await verifyJwt<{ sub: string }>(token);
+    userId = Number(payload.sub);
+    if (!Number.isFinite(userId)) throw new Error("Invalid sub");
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   // Load products and compute total
   const productIds = items.map((i) => i.productId);
@@ -23,7 +38,7 @@ export async function POST(req: Request) {
   const order = await prisma.$transaction(async (tx) => {
     const created = await tx.order.create({
       data: {
-        userId: 1, // MVP: attach to a fixed user or replace with auth context
+        userId: userId!,
         totalAmount: totalAmount as any,
         status: "PENDING",
       },
