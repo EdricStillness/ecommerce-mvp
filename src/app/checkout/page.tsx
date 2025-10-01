@@ -16,10 +16,25 @@ export default function CheckoutPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items }),
     });
+    if (!res.ok) {
+      setPlacing(false);
+      return;
+    }
+    const data = await res.json();
+    const orderId = data.orderId as number;
+
+    // Call simulated PayPal create to get approval URL
+    const createRes = await fetch("/api/payments/paypal/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderId }),
+    });
     setPlacing(false);
-    if (res.ok) {
+    if (createRes.ok) {
+      const { approvalUrl } = await createRes.json();
+      // Clear local cart client state; server already clears cookie on checkout
       clear();
-      router.push("/");
+      router.push(approvalUrl);
     }
   }
 
