@@ -74,6 +74,10 @@ model Order {
   userId      Int
   totalAmount Decimal      @db.Decimal(10, 2)
   status      OrderStatus  @default(PENDING)
+  paymentProvider String?  @db.VarChar(20)
+  paymentToken    String?  @db.VarChar(255)
+  transactionId   String?  @db.VarChar(100)
+  paidAt          DateTime?
   createdAt   DateTime     @default(now())
   items       OrderItem[]
 }

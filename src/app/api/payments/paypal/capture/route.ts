@@ -1,7 +1,6 @@
-import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { verifyJwt } from "@/lib/auth";
+import { paymentService } from "@/server/services/payment.service";
 
 const Body = z.object({ token: z.string().min(10) });
 
@@ -12,13 +11,8 @@ export async function POST(req: Request) {
   const { token } = parse.data;
 
   try {
-    const payload = await verifyJwt<{ kind: string; orderId: number; amount: string }>(token);
-    if (payload.kind !== "paypal") throw new Error("Invalid token kind");
-    const orderId = Number(payload.orderId);
-    if (!Number.isFinite(orderId)) throw new Error("Invalid orderId");
-
-    const updated = await prisma.order.update({ where: { id: orderId }, data: { status: "PAID" } });
-    return NextResponse.json({ ok: true, orderId: updated.id, status: updated.status });
+    const updated = await paymentService.capturePaypal(token);
+    return NextResponse.json({ ok: true, ...updated });
   } catch (e) {
     return NextResponse.json({ error: "Invalid or expired token" }, { status: 400 });
   }

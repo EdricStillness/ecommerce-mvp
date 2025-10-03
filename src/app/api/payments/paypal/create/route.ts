@@ -2,7 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { cookies } from "next/headers";
-import { verifyJwt, signJwt } from "@/lib/auth";
+import { verifyJwt } from "@/lib/auth";
+import { paymentService } from "@/server/services/payment.service";
 
 const Body = z.object({ orderId: z.number().int().positive() });
 
@@ -28,12 +29,7 @@ export async function POST(req: Request) {
   if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
   if (order.status === "PAID") return NextResponse.json({ error: "Order already paid" }, { status: 400 });
 
-  const payToken = await signJwt(
-    { kind: "paypal", orderId: order.id, amount: String(order.totalAmount) },
-    "10m"
-  );
-
   const origin = req.headers.get("origin") || "http://localhost:3000";
-  const approvalUrl = `${origin}/payments/paypal/approve?token=${encodeURIComponent(payToken)}`;
-  return NextResponse.json({ approvalUrl, token: payToken });
+  const { approvalUrl, token: approvalToken } = await paymentService.createPaypalApproval(order.id, String(order.totalAmount), origin);
+  return NextResponse.json({ approvalUrl, token: approvalToken });
 }
