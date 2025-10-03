@@ -1,11 +1,7 @@
-import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { productService } from "@/server/services/product.service";
 
 export async function GET() {
-  const products = await prisma.product.findMany({
-    include: { images: { orderBy: { sort: "asc" }, take: 1 } },
-    orderBy: { createdAt: "desc" },
-    take: 50,
-  });
+  const products = await productService.list();
   return NextResponse.json({ products });
 }
