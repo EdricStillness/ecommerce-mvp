@@ -1,8 +1,13 @@
 import "./globals.css";
 import Link from "next/link";
 import HeaderUser from "@/components/HeaderUser";
+import prisma from "@/lib/prisma";
+import { getSessionUserId } from "@/server/utils/session";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const uid = await getSessionUserId();
+  const user = uid ? await prisma.user.findUnique({ where: { id: uid } }) : null;
+  const isAdmin = user?.role === "ADMIN";
   return (
     <html lang="vi">
       <body className="min-h-dvh bg-gray-50 text-gray-900">
@@ -11,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/" className="font-semibold">E-Commerce MVP</Link>
             <div className="flex items-center gap-4">
               <Link href="/" className="hover:underline">Store</Link>
-              <Link href="/admin" className="hover:underline">Dashboard</Link>
+              {isAdmin ? (<Link href="/admin" className="hover:underline">Dashboard</Link>) : null}
               {/* Auth state */}
               <HeaderUser />
             </div>

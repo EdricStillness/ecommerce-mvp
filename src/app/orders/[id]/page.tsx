@@ -13,8 +13,8 @@ export default async function OrderDetailPage({ params }: { params: { id: string
   if (!order) redirect("/orders");
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-2">Đơn hàng #{order.id}</h1>
-      <p className="text-sm text-gray-600 mb-4">Trạng thái: {order.status}</p>
+  <h1 className="text-2xl font-bold mb-2">Order #{order.id}</h1>
+  <p className="text-sm text-gray-600 mb-4">Status: {order.status}</p>
       <div className="space-y-2">
         {order.items.map((it) => (
           <div key={it.id} className="bg-white rounded border p-3 flex items-center justify-between">
@@ -26,7 +26,7 @@ export default async function OrderDetailPage({ params }: { params: { id: string
           </div>
         ))}
       </div>
-      <div className="mt-4 font-semibold">Tổng: {String(order.totalAmount)}</div>
+  <div className="mt-4 font-semibold">Total: {String(order.totalAmount)}</div>
     </div>
   );
 }

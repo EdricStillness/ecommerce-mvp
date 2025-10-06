@@ -14,7 +14,7 @@ export default function LogoutButton() {
   }
   return (
     <button onClick={logout} className="text-sm hover:underline" disabled={loading}>
-      {loading ? "Đang thoát…" : "Đăng xuất"}
+  {loading ? "Signing out…" : "Sign out"}
     </button>
   );
 }

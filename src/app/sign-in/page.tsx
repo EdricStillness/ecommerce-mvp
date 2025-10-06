@@ -21,18 +21,18 @@ export default function SignInPage() {
     });
     setLoading(false);
     if (res.ok) router.push("/");
-    else setError("Đăng nhập thất bại");
+    else setError("Sign-in failed");
   }
 
   return (
     <div className="max-w-sm mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Đăng nhập</h1>
+      <h1 className="text-2xl font-bold mb-6">Sign In</h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <input className="w-full border rounded px-3 py-2" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input className="w-full border rounded px-3 py-2" placeholder="Mật khẩu" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input className="w-full border rounded px-3 py-2" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         {error && <p className="text-red-600 text-sm">{error}</p>}
         <button disabled={loading} className="w-full bg-black text-white rounded py-2 disabled:opacity-50">
-          {loading ? "Đang đăng nhập..." : "Đăng nhập"}
+          {loading ? "Signing in..." : "Sign In"}
         </button>
       </form>
     </div>
