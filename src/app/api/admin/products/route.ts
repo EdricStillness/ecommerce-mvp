@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUserId } from "@/server/utils/session";
 import prisma from "@/lib/prisma";
 import { AdminCreateProductSchema } from "@/server/schemas/product";

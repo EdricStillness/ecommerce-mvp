@@ -1,5 +1,7 @@
-import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import HeroSection from "@/components/HeroSection";
+import FeaturesSection from "@/components/FeaturesSection";
+import ProductFilters from "@/components/ProductFilters";
 
 export default async function Home() {
   const products = await prisma.product.findMany({
@@ -9,26 +11,20 @@ export default async function Home() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Products</h1>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {products.map((p) => (
-          <Link
-            key={p.id}
-            href={`/products/${p.slug}`}
-            className="group bg-white rounded-xl shadow p-3 hover:shadow-md transition"
-          >
-            <img
-              src={p.images[0]?.url || "https://picsum.photos/seed/placeholder/600/400"}
-              alt={p.name}
-              className="aspect-[3/2] w-full object-cover rounded-lg"
-            />
-            <div className="mt-3">
-              <h3 className="font-medium group-hover:underline">{p.name}</h3>
-              <p className="text-sm text-gray-600">${p.price.toString()}</p>
-            </div>
-          </Link>
-        ))}
+      <HeroSection />
+      
+      <FeaturesSection />
+
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-[#d97757] to-[#8b7355] bg-clip-text text-transparent">
+          Discover Our Products
+        </h1>
+        <p className="text-gray-600">
+          Browse through our amazing collection of {products.length} products
+        </p>
       </div>
+
+      <ProductFilters products={products} />
     </div>
   );
 }

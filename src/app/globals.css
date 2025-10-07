@@ -1,8 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm, natural color palette */
+  --background: #fdfcfb;
+  --background-secondary: #f8f6f4;
+  --foreground: #2d3436;
+  
+  /* Primary colors - Warm earthy tones */
+  --primary: #d97757;
+  --primary-dark: #c76543;
+  --primary-light: #e89b7d;
+  
+  /* Accent colors - Soft complementary */
+  --accent: #8b7355;
+  --accent-light: #a68a6f;
+  
+  /* Neutral colors */
+  --gray-50: #faf9f8;
+  --gray-100: #f4f2f0;
+  --gray-200: #e8e5e1;
+  --gray-300: #d4cfc8;
+  --gray-600: #6b6560;
+  --gray-700: #4a4540;
+  --gray-900: #2d2a26;
+  
+  /* Status colors - Muted tones */
+  --success: #7fad7a;
+  --warning: #d4a574;
+  --danger: #c97c7c;
 }
 
 @theme inline {
@@ -14,8 +39,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1a1816;
+    --background-secondary: #24201d;
+    --foreground: #e8e5e1;
   }
 }
 
@@ -105,4 +131,418 @@ button:disabled {
 }
 .btn-ghost:active:not(:disabled) {
   transform: scale(0.98);
+}
+
+/* =================================
+   ADVANCED 3D ANIMATIONS & EFFECTS
+   ================================= */
+
+/* Keyframe Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes rotate-3d {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.8);
+  }
+}
+
+@keyframes product-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px) rotateX(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.5s ease-out;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* =================================
+   HERO SECTION 3D EFFECTS
+   ================================= */
+
+.hero-container {
+  perspective: 1000px;
+}
+
+.hero-title {
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: slide-in 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Floating shapes for parallax effect */
+.floating-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.3;
+  transition: transform 0.3s ease-out;
+}
+
+.shape-1 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.5) 100%);
+  top: 10%;
+  left: 10%;
+  animation: float 8s ease-in-out infinite;
+}
+
+.shape-2 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+  bottom: 10%;
+  right: 10%;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.shape-3 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  top: 50%;
+  right: 20%;
+  animation: float 12s ease-in-out infinite;
+}
+
+/* Glassmorphism panel */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Stats cards with 3D effect */
+.stat-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  transform-style: preserve-3d;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Slide indicators */
+.slide-indicator {
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.slide-indicator:hover {
+  transform: scale(1.2);
+}
+
+/* =================================
+   FEATURE CARDS 3D EFFECTS
+   ================================= */
+
+.feature-card-3d {
+  perspective: 1000px;
+  animation: product-card-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.feature-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.feature-card-3d:hover .feature-card-inner {
+  transform: translateY(-12px);
+}
+
+.feature-card-front {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.feature-card-3d:hover .feature-card-front {
+  box-shadow: 0 20px 60px rgba(217, 119, 87, 0.15);
+}
+
+.feature-icon-rotate {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-card-3d:hover .feature-icon-rotate {
+  transform: rotateY(180deg) scale(1.1);
+}
+
+/* =================================
+   PRODUCT CARDS 3D EFFECTS
+   ================================= */
+
+.product-card-3d {
+  position: relative;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  animation: product-card-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.product-card-3d:hover {
+  transform: translateY(-16px) scale(1.02);
+  box-shadow: 0 24px 60px rgba(217, 119, 87, 0.2);
+}
+
+.quick-view-btn {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(217, 119, 87, 0.3);
+  z-index: 10;
+}
+
+.product-card-3d:hover .quick-view-btn {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.quick-view-btn:hover {
+  transform: translateX(-50%) translateY(0) scale(1.05);
+  box-shadow: 0 15px 40px rgba(217, 119, 87, 0.5);
+}
+
+/* Badges with modern styling */
+.badge-new,
+.badge-warning,
+.badge-danger {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  animation: slide-down 0.5s ease backwards;
+}
+
+.badge-new {
+  background: linear-gradient(135deg, var(--success) 0%, #6b9c67 100%);
+  color: white;
+}
+
+.badge-warning {
+  background: linear-gradient(135deg, var(--warning) 0%, #c89860 100%);
+  color: white;
+}
+
+.badge-danger {
+  background: linear-gradient(135deg, var(--danger) 0%, #b86d6d 100%);
+  color: white;
+}
+
+/* =================================
+   MODAL 3D EFFECTS
+   ================================= */
+
+.modal-content-3d {
+  background: white;
+  border-radius: 32px;
+  max-width: 56rem;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+  animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.modal-image-container {
+  animation: slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+}
+
+.modal-image-container img {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-image-container:hover img {
+  transform: scale(1.05);
+}
+
+/* =================================
+   SEARCH & INPUT EFFECTS
+   ================================= */
+
+.search-container input {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-container input:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(217, 119, 87, 0.12);
+}
+
+/* =================================
+   EMPTY STATE
+   ================================= */
+
+.empty-state-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* =================================
+   UTILITIES
+   ================================= */
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(217, 119, 87, 0.25);
+  color: inherit;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-dark) 0%, var(--accent-light) 100%);
 }
